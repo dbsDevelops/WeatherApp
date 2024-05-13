@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dbuxton.weatherapp.city_details_screen.adapter.HourlyAdapter
 import com.dbuxton.weatherapp.city_details_screen.domain.HourlyWeatherData
 import com.dbuxton.weatherapp.databinding.ActivityCityDetailBinding
-import com.dbuxton.weatherapp.default_cities_screen.LocationManager
+import com.dbuxton.weatherapp.default_cities_screen.location.LocationManager
 
 class CityDetailActivity : AppCompatActivity() {
 
