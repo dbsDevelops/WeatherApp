@@ -1,4 +1,4 @@
-package com.dbuxton.weatherapp.ui.default_cities_screen.location
+package com.dbuxton.weatherapp.ui.city_details_screen.location
 
 import android.content.pm.PackageManager
 import android.location.Geocoder

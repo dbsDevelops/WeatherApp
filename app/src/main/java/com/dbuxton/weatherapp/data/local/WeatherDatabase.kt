@@ -1,31 +1,15 @@
 package com.dbuxton.weatherapp.data.local
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.dbuxton.weatherapp.data.model.CityData
+import androidx.room.TypeConverters
+import com.dbuxton.weatherapp.data.converters.Converters
 import com.dbuxton.weatherapp.data.model.ForecastData
 import com.dbuxton.weatherapp.data.model.UserData
+import com.dbuxton.weatherapp.data.model.WeatherData
 
-@Database(entities = [UserData::class, CityData::class, ForecastData::class], version = 1)
+@Database(entities = [UserData::class, ForecastData::class, WeatherData::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class WeatherDatabase: RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
-
-//    companion object {
-//        @Volatile
-//        private var INSTANCE: WeatherDatabase? = null
-//
-//        fun getDatabase(context: Context): WeatherDatabase {
-//            return INSTANCE ?: synchronized(this) {
-//                val instance = Room.databaseBuilder(
-//                    context.applicationContext,
-//                    WeatherDatabase::class.java,
-//                    "weather_database"
-//                ).build()
-//                INSTANCE = instance
-//                instance
-//            }
-//        }
-//    }
 }

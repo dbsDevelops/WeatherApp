@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:allowBackup="true"
@@ -17,7 +18,7 @@
         android:theme="@style/Theme.WeatherApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.default_cities_screen.presentation.MainActivity"
+            android:name=".ui.default_cities_screen.presentation.DefaultCitiesScreenActivity"
             android:exported="false" />
         <activity
             android:name=".ui.city_details_screen.presentation.CityDetailActivity"

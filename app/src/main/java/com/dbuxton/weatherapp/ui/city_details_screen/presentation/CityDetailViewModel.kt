@@ -1,4 +1,4 @@
-package com.dbuxton.weatherapp.ui.default_cities_screen.presentation
+package com.dbuxton.weatherapp.ui.city_details_screen.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -13,8 +13,10 @@ import com.dbuxton.weatherapp.data.repository.WeatherRepository
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
-class MainViewModel(application: Application): AndroidViewModel(application) {
+class CityDetailViewModel (application: Application): AndroidViewModel(application) {
+
     private val weatherRepository: WeatherRepository
     val weatherData: LiveData<List<ForecastData>>
     val db = Room.databaseBuilder(
@@ -26,7 +28,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         val weatherDao = db.weatherDao()
         val apiService = Retrofit.Builder()
             .baseUrl("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
             .build()
             .create(WeatherApiService::class.java)
 

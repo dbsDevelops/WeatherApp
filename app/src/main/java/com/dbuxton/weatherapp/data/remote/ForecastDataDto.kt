@@ -17,7 +17,7 @@ data class ForecastDataDto(
     val minTemperatures: List<Double>,
     @field:Json(name = "tempmax")
     val maxTemperatures: List<Double>,
-    @field:Json(name = "preicpprob")
+    @field:Json(name = "precipprob")
     val precipitationProbabilities: List<Int>,
     @field:Json(name = "uvindex")
     val uvIndexes: List<Int>,

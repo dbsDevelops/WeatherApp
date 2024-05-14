@@ -11,20 +11,23 @@ private data class IndexedForecastData(
     val data: ForecastData
 )
 
-fun ForecastDataDto.toForecastDataMap(): Map<Int, List<ForecastData>> {
-    return datetime.mapIndexed { index, date ->
-        val temperature = temperatures[index]
-        val description = descriptions[index]
-        val condition = conditions[index]
-        val icon = icons[index]
-        val minTemperature = minTemperatures[index]
-        val maxTemperature = maxTemperatures[index]
-        val precipitationProbability = precipitationProbabilities[index]
-        val uvIndex = uvIndexes[index]
-        val windSpeed = windSpeeds[index]
+
+fun ForecastDto.toForecastDataMap(): Map<Int, List<ForecastData>> {
+    return weatherData.datetime.mapIndexed { index, date ->
+        val cityName = address[index]
+        val temperature = weatherData.temperatures[index]
+        val description = weatherData.descriptions[index]
+        val condition = weatherData.conditions[index]
+        val icon = weatherData.icons[index]
+        val minTemperature = weatherData.minTemperatures[index]
+        val maxTemperature = weatherData.maxTemperatures[index]
+        val precipitationProbability = weatherData.precipitationProbabilities[index]
+        val uvIndex = weatherData.uvIndexes[index]
+        val windSpeed = weatherData.windSpeeds[index]
         IndexedForecastData(
             index = index,
             data = ForecastData(
+                cityName = cityName.toString(),
                 date = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE),
                 temperature = temperature.toInt(),
                 description = description,
