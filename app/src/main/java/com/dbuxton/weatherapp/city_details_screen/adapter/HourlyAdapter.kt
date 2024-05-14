@@ -22,11 +22,11 @@ class HourlyAdapter(private val hourlyList: List<HourlyWeatherData>): RecyclerVi
 
     override fun onBindViewHolder(holder: HourlyViewHolder, position: Int) {
         val hourly = hourlyList[position]
-        holder.tvHour.text = hourly.time
-        holder.tvTemperature.text = hourly.temperature.toString() + "°C"
+        holder.tvHour.text = hourly.datetime
+        holder.tvTemperature.text = hourly.temp.toString() + "°C"
 
         Glide.with(context)
-            .load(getDrawable(hourly.weatherIcon))
+            .load(getDrawable(hourly.icon))
             .into(holder.ivCondition)
     }
 

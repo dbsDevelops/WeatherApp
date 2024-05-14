@@ -21,4 +21,9 @@
     <string name="temperature">Temperature</string>
     <string name="time">Time</string>
     <string name="_20_c">20ºC</string>
+    <string name="my_cities">My Cities</string>
+    <string name="my_favourites">My Favourites</string>
+    <string name="_24_c">24ºC</string>
+    <string name="_9">9</string>
+    <string name="clear_sky">Clear Sky</string>
 </resources>

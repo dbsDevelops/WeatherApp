@@ -52,7 +52,7 @@
                     android:textSize="90sp"
                     android:textColor="@color/white"
                     android:fontFamily="sans-serif-thin"
-                    android:text="24ºC"
+                    android:text="@string/_24_c"
                     android:layout_gravity="center"
                     />
                 <TextView
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="@color/white"
-                    android:text="Clear Sky"
+                    android:text="@string/clear_sky"
                     />
 
                 <LinearLayout
@@ -176,7 +176,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="14sp"
                             android:textColor="@color/white"
-                            android:text="9" />
+                            android:text="@string/_9" />
                     </LinearLayout>
                     <Space
                         android:layout_width="10dp"
@@ -255,6 +255,34 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 />
+            <LinearLayout
+                android:id="@+id/defaultAndFavouriteCitiesContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/default_cities_icon"
+                    android:background="@drawable/round_corner_purple"
+                    android:scaleType="fitCenter"
+                    android:padding="15dp"
+                    android:tooltipText="@string/my_cities"
+                    android:contentDescription="@string/my_cities"/>
+                <Space
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/favourite_cities_icon"
+                    android:background="@drawable/round_corner_purple"
+                    android:scaleType="fitCenter"
+                    android:tooltipText="@string/my_favourites"
+                    android:contentDescription="@string/my_favourites"/>
+            </LinearLayout>
 
         </LinearLayout>
 
