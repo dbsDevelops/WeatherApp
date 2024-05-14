@@ -1,4 +1,4 @@
-package com.dbuxton.weatherapp.city_details_screen.adapter
+package com.dbuxton.weatherapp.ui.city_details_screen.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dbuxton.weatherapp.R
-import com.dbuxton.weatherapp.city_details_screen.domain.HourlyWeatherData
+import com.dbuxton.weatherapp.ui.city_details_screen.domain.HourlyWeatherData
 
 
 class HourlyAdapter(private val hourlyList: List<HourlyWeatherData>): RecyclerView.Adapter<HourlyViewHolder>() {

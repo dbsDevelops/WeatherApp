@@ -17,13 +17,13 @@
         android:theme="@style/Theme.WeatherApp"
         tools:targetApi="31">
         <activity
-            android:name=".default_cities_screen.presentation.MainActivity"
+            android:name=".ui.default_cities_screen.presentation.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".city_details_screen.presentation.CityDetailActivity"
+            android:name=".ui.city_details_screen.presentation.CityDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".splash_screen.SplashScreenActivity"
+            android:name=".ui.splash_screen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,13 +1,13 @@
-package com.dbuxton.weatherapp.city_details_screen.presentation
+package com.dbuxton.weatherapp.ui.city_details_screen.presentation
 
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dbuxton.weatherapp.city_details_screen.adapter.HourlyAdapter
-import com.dbuxton.weatherapp.city_details_screen.domain.HourlyWeatherData
+import com.dbuxton.weatherapp.ui.city_details_screen.adapter.HourlyAdapter
+import com.dbuxton.weatherapp.ui.city_details_screen.domain.HourlyWeatherData
 import com.dbuxton.weatherapp.databinding.ActivityCityDetailBinding
-import com.dbuxton.weatherapp.default_cities_screen.location.LocationManager
+import com.dbuxton.weatherapp.ui.default_cities_screen.location.LocationManager
 
 class CityDetailActivity : AppCompatActivity() {
 
@@ -33,7 +33,7 @@ class CityDetailActivity : AppCompatActivity() {
         setContentView(view.root)
 
         val tvLocation: TextView = view.tvLocation
-        locationManager.fetchCityName(tvLocation)
+        //locationManager.fetchCityName(tvLocation)
 
         initRecyclerView()
     }

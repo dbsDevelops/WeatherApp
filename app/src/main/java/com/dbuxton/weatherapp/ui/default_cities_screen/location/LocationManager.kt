@@ -1,4 +1,4 @@
-package com.dbuxton.weatherapp.default_cities_screen.location
+package com.dbuxton.weatherapp.ui.default_cities_screen.location
 
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -20,40 +20,52 @@ class LocationManager(
     private var longitude: Double = 0.0
 
 
-    private fun fetchDeviceLocation(onLocationReceived: (Double, Double) -> Unit) {
+    fun fetchDeviceLocation(onLocationReceived: (Double, Double) -> Unit) {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(appCompatActivity)
         val hasAccessFineLocationPermission = ActivityCompat.checkSelfPermission(appCompatActivity,
             android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val hasAccessCoarseLocationPermission = ActivityCompat.checkSelfPermission(appCompatActivity,
             android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-
-        val task = fusedLocationProviderClient.lastLocation
-
         if(!hasAccessFineLocationPermission && !hasAccessCoarseLocationPermission) {
             ActivityCompat.requestPermissions(appCompatActivity,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION,
                     android.Manifest.permission.ACCESS_COARSE_LOCATION), 101)
             return
         }
+        val task = fusedLocationProviderClient.lastLocation
         task.addOnSuccessListener {
             onLocationReceived(it.latitude, it.longitude)
         }
     }
 
-    public fun fetchCityName(tvLocation: TextView) {
-        fetchDeviceLocation { latitude, longitude ->
-            try {
-                geocoder = Geocoder(appCompatActivity, Locale.getDefault())
-                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
-                if (addresses != null) {
-                    val cityName = addresses[0].locality
-                    tvLocation.text = cityName
-                } else {
-                    tvLocation.text = "City not found"
-                }
-            } catch (e: IOException) {
-                tvLocation.text = "Error fetching city name"
+//    public fun fetchCityName(tvLocation: TextView) {
+//        fetchDeviceLocation { latitude, longitude ->
+//            try {
+//                geocoder = Geocoder(appCompatActivity, Locale.getDefault())
+//                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+//                if (addresses != null) {
+//                    val cityName = addresses[0].locality
+//                    tvLocation.text = cityName
+//                } else {
+//                    tvLocation.text = "City not found"
+//                }
+//            } catch (e: IOException) {
+//                tvLocation.text = "Error fetching city name"
+//            }
+//        }
+//    }
+    fun fetchCityName(latitude: Double, longitude: Double, onCityNameReceived: (String) -> Unit) {
+        geocoder = Geocoder(appCompatActivity, Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            if (addresses != null && addresses.isNotEmpty()) {
+                val cityName = addresses[0].locality
+                onCityNameReceived(cityName)
+            } else {
+                onCityNameReceived("City not found")
             }
+        } catch (e: IOException) {
+            onCityNameReceived("Error fetching city name")
         }
     }
 
