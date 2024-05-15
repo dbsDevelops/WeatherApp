@@ -13,7 +13,6 @@ import com.dbuxton.weatherapp.data.repository.WeatherRepository
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 class CityDetailViewModel (application: Application): AndroidViewModel(application) {
 
@@ -22,13 +21,18 @@ class CityDetailViewModel (application: Application): AndroidViewModel(applicati
     val db = Room.databaseBuilder(
         context = application.applicationContext,
         WeatherDatabase::class.java, "weather_database"
-    ).build()
+    ).fallbackToDestructiveMigration()
+        .allowMainThreadQueries()
+        .build()
+
 
     init {
+        //val moshi = Moshi.Builder().build()
+        //val jsonAdapter = moshi.adapter(ForecastData::class.java)
         val weatherDao = db.weatherDao()
         val apiService = Retrofit.Builder()
             .baseUrl("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(WeatherApiService::class.java)
 

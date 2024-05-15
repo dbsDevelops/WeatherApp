@@ -57,13 +57,16 @@
                     />
                 <TextView
                     android:id="@+id/tvDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:textSize="14sp"
                     android:textColor="@color/white"
                     android:textAlignment="center"
                     android:text="@string/similar_temperatures_continuing_with_a_chance_of_rain_tomorrow_amp_tuesday"
                     />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
                 <TextView
                     android:id="@+id/tvCondition"
                     android:layout_gravity="center"
@@ -73,6 +76,9 @@
                     android:textColor="@color/white"
                     android:text="@string/clear_sky"
                     />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"/>
 
                 <LinearLayout
                     android:orientation="horizontal"

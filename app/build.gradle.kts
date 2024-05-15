@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.utils.findKaptOrKspConfigurationsForVariant
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -86,6 +84,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+//    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
+//    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
+//    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.13.0")
 //    implementation(libs.androidx.room.common)
 //    implementation(libs.androidx.room.ktx)
 //

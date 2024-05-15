@@ -1,12 +1,11 @@
 package com.dbuxton.weatherapp.ui.city_details_screen.presentation
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dbuxton.weatherapp.databinding.ActivityCityDetailBinding
 import com.dbuxton.weatherapp.ui.city_details_screen.adapter.HourlyAdapter
 import com.dbuxton.weatherapp.ui.city_details_screen.domain.HourlyWeatherData
-import com.dbuxton.weatherapp.databinding.ActivityCityDetailBinding
 import com.dbuxton.weatherapp.ui.city_details_screen.location.LocationManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,19 +46,19 @@ class CityDetailActivity : AppCompatActivity() {
 
     private suspend fun updateUI(viewModel: CityDetailViewModel, cityName: String) {
         val forecast = withContext(Dispatchers.IO) {
-            viewModel.db.weatherDao().getForecastsByCity(cityName).firstOrNull()
+            viewModel.db.weatherDao().getForecastsByCity(cityName).first()
         }
         println(forecast)
         forecast?.let {
             withContext(Dispatchers.Main) {
-                view.tvTemperature.text = it.temperature.toString()
+                view.tvTemperature.text = it.temperature.toString() + "°C"
                 view.tvDescription.text = it.description
                 view.tvCondition.text = it.condition
                 view.tvMinTemperatureValue.text = it.minTemperature.toString()
                 view.tvMaxTemperatureValue.text = it.maxTemperature.toString()
-                view.tvPrecipitationProbabilityValue.text = it.precipitationProbability.toString()
+                view.tvPrecipitationProbabilityValue.text = it.precipitationProbability.toString() + "%"
                 view.tvUvIndexValue.text = it.uvIndex.toString()
-                view.tvWindSpeedValue.text = it.windSpeed.toString()
+                view.tvWindSpeedValue.text = it.windSpeed.toString() + " km/h"
             }
         }
     }
