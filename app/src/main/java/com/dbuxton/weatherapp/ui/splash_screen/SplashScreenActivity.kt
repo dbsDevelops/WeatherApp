@@ -29,8 +29,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
         // Fetch location and weather data
         scope.launch {
-            // Fetch weather data for the default cities
-
             // Fetch location and start the CityDetailActivity
             locationManager.fetchDeviceLocation { latitude, longitude ->
                 val cityName = locationManager.fetchCityName(latitude, longitude)

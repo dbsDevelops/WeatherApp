@@ -8,11 +8,8 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 // Static counter to avoid duplicate ids
-var hourlyDataId = 0
-
-fun hourlyDataId() {
-    hourlyDataId++
-}
+var idForecast = 0
+fun idForecast() = idForecast++
 
 fun ForecastDto.toHourlyDataList(): List<HourlyData> {
     val hourlyDataList = mutableListOf<HourlyData>()
@@ -32,6 +29,7 @@ fun ForecastDto.toForecastDataList(): List<ForecastData> {
     for (i in 0 until weatherData.size) {
         val forecastData = weatherData[i]
         val forecast = ForecastData(
+            id_forecast = idForecast,
             cityName = address,
             date = LocalDate.parse(forecastData.datetime, DateTimeFormatter.ISO_LOCAL_DATE),
             maxTemperature = forecastData.tempmax.toInt(),
@@ -45,7 +43,7 @@ fun ForecastDto.toForecastDataList(): List<ForecastData> {
             icon = forecastData.icon,
             isFavourite = false
         )
-        hourlyDataId()
+        idForecast()
         return listOf(forecast)
     }
     return emptyList()

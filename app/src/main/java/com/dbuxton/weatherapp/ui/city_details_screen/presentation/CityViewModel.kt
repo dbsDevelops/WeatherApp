@@ -3,6 +3,8 @@ package com.dbuxton.weatherapp.ui.city_details_screen.presentation
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.dbuxton.weatherapp.data.local.WeatherDatabaseImpl
 import com.dbuxton.weatherapp.data.model.ForecastData
@@ -13,11 +15,11 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class CityDetailViewModel (application: Application): AndroidViewModel(application) {
+class CityViewModel (application: Application): AndroidViewModel(application) {
 
     private val weatherRepository: WeatherRepository
-    val hourlyDataList: MutableList<HourlyData> = mutableListOf()
-    var forecastData: ForecastData? = null
+    val hourlyDataList: LiveData<List<HourlyData>>
+    var forecastData: LiveData<ForecastData>
     val db = WeatherDatabaseImpl(application).db
 
     init {
@@ -29,16 +31,20 @@ class CityDetailViewModel (application: Application): AndroidViewModel(applicati
             .create(WeatherApiService::class.java)
 
         weatherRepository = WeatherRepository(weatherDao, apiService)
+        hourlyDataList = MutableLiveData()
+        forecastData = MutableLiveData()
     }
 
     fun fetchWeatherData(location: String, apiKey: String) {
         viewModelScope.launch {
             weatherRepository.fetchAndSaveDailyWeatherData(location, apiKey)
 
-            hourlyDataList.addAll(weatherRepository.getHourlyDataByCity(location))
+            (hourlyDataList as MutableLiveData).postValue(weatherRepository.getHourlyDataByCity(location))
+            //hourlyDataList.addAll(weatherRepository.getHourlyDataByCity(location))
             Log.d("Fetch Hourly Data", "Hourly data fetched: ${hourlyDataList}")
 
-            forecastData = weatherRepository.getForecastsByCity(location)
+            (forecastData as MutableLiveData).postValue(weatherRepository.getForecastsByCity(location))
+            //forecastData = weatherRepository.getForecastsByCity(location)
             Log.d("Fetch Forecast Data", "Forecast data fetched: ${forecastData}")
         }
     }

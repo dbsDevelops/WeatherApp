@@ -9,22 +9,22 @@ import com.dbuxton.weatherapp.R
 import com.dbuxton.weatherapp.data.model.ForecastData
 import com.dbuxton.weatherapp.data.util.DrawableResource
 
-class ForecastDataAdapter(
+class CityItemAdapter(
     private var forecastDataList: List<ForecastData>,
     private val onFavouriteClick: (ForecastData) -> Unit,
     private val onCityClick: (ForecastData) -> Unit
-) : RecyclerView.Adapter<ForecastDataViewHolder>() {
+) : RecyclerView.Adapter<CityItemViewHolder>() {
 
     private lateinit var context: Context
     private val drawableResource = DrawableResource.getInstance()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastDataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityItemViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_city, parent, false)
         context = parent.context
-        return ForecastDataViewHolder(view)
+        return CityItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ForecastDataViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CityItemViewHolder, position: Int) {
         val forecastData = forecastDataList[position]
         holder.cityName.text = forecastData.cityName
         holder.currentTemp.text = forecastData.temperature.toString() + "°C"

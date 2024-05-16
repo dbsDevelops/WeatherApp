@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dbuxton.weatherapp.R
 
-class ForecastDataViewHolder(view: View): RecyclerView.ViewHolder(view) {
+class CityItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
     val cityName: TextView = view.findViewById(R.id.tvCityName)
     val currentTemp: TextView = view.findViewById(R.id.tvCityTemperature)
     val weatherIcon: ImageView = view.findViewById(R.id.ivCityWeatherIcon)
