@@ -27,7 +27,8 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_rainshower" />
+            app:srcCompat="@drawable/ic_rainshower"
+            android:contentDescription="@string/weather_icon"/>
 
         <TextView
             android:id="@+id/tvHourlyTemperature"

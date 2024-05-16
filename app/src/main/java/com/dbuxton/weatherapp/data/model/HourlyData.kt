@@ -2,12 +2,12 @@ package com.dbuxton.weatherapp.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import java.time.LocalTime
 
-@Entity(tableName = "hourly_data")
+@Entity(tableName = "hourly_data",
+    primaryKeys = ["city_name", "time"])
 data class HourlyData (
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @ColumnInfo(name = "city_name") val cityName: String,
     @ColumnInfo(name = "time") val time: LocalTime,
     @ColumnInfo(name = "temperature") val temp: Int,
     @ColumnInfo(name = "icon") val icon: String

@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 class Converters {
@@ -44,6 +45,18 @@ class Converters {
     fun toLocalDateTime(dateString: String?): LocalDateTime? {
         return dateString?.let {
             LocalDateTime.parse(it, DateTimeFormatter.ISO_LOCAL_DATE)
+        }
+    }
+
+    @TypeConverter
+    fun fromLocalTime(date: LocalTime?): String? {
+        return date?.format(DateTimeFormatter.ISO_LOCAL_TIME)
+    }
+
+    @TypeConverter
+    fun toLocalTime(dateString: String?): LocalTime? {
+        return dateString?.let {
+            LocalTime.parse(it, DateTimeFormatter.ISO_LOCAL_TIME)
         }
     }
 }

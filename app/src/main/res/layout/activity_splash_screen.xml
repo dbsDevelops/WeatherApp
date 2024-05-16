@@ -9,9 +9,9 @@
     android:background="@drawable/gradient_bg">
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lavWeatherLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lottie"
         app:lottie_rawRes="@raw/weather"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"

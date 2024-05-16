@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dbuxton.weatherapp.R
-import com.dbuxton.weatherapp.ui.city_details_screen.domain.HourlyWeatherData
+import com.dbuxton.weatherapp.data.model.HourlyData
+import com.dbuxton.weatherapp.data.util.DrawableResource
 
 
-class HourlyAdapter(private val hourlyList: List<HourlyWeatherData>): RecyclerView.Adapter<HourlyViewHolder>() {
+class HourlyAdapter(private val hourlyList: List<HourlyData>): RecyclerView.Adapter<HourlyViewHolder>() {
 
     private lateinit var context: Context
+    private val drawableResource = DrawableResource.getInstance()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HourlyViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -22,45 +24,14 @@ class HourlyAdapter(private val hourlyList: List<HourlyWeatherData>): RecyclerVi
 
     override fun onBindViewHolder(holder: HourlyViewHolder, position: Int) {
         val hourly = hourlyList[position]
-        holder.tvHour.text = hourly.datetime
-        holder.tvTemperature.text = hourly.temp.toString() + "°C"
-
+        holder.tvHour.text = hourly.time.toString()
         Glide.with(context)
-            .load(getDrawable(hourly.icon))
+            .load(drawableResource.getDrawable(hourly.icon))
             .into(holder.ivCondition)
+        holder.tvTemperature.text = hourly.temp.toString() + "°C"
     }
 
     override fun getItemCount(): Int {
         return hourlyList.size
-    }
-
-    private fun getDrawable(weatherIcon: String): Int {
-        return when (weatherIcon) {
-            "clear-day" -> R.drawable.clear_day
-            "clear-night" -> R.drawable.clear_day
-            "cloudy" -> R.drawable.cloudy
-            "fog" -> R.drawable.fog
-            "hail" -> R.drawable.hail
-            "partly-cloudy-day" -> R.drawable.partly_cloudy_day
-            "partly-cloudy-night" -> R.drawable.partly_cloudy_night
-            "rain" -> R.drawable.rain
-            "rain-snow" -> R.drawable.rain_snow
-            "rain-snow-showers-day" -> R.drawable.rain_snow_showers_day
-            "rain-snow-showers-night" -> R.drawable.rain_snow_showers_night
-            "showers-day" -> R.drawable.showers_day
-            "showers-night" -> R.drawable.showers_night
-            "sleet" -> R.drawable.sleet
-            "snow" -> R.drawable.snow
-            "snow-showers-day" -> R.drawable.snow_showers_day
-            "snow-showers-night" -> R.drawable.snow_showers_night
-            "thunder" -> R.drawable.thunder
-            "thunder-rain" -> R.drawable.thunder_rain
-            "thunder-showers-day" -> R.drawable.thunder_showers_day
-            "thunder-showers-night" -> R.drawable.thunder_showers_night
-            "wind" -> R.drawable.wind
-            else -> {
-                R.drawable.weather_not_available
-            }
-        }
     }
 }

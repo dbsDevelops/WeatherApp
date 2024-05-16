@@ -1,8 +1,7 @@
-package com.dbuxton.weatherapp.ui.city_details_screen.location
+package com.dbuxton.weatherapp.ui.splash_screen.location
 
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -38,34 +37,18 @@ class LocationManager(
         }
     }
 
-//    public fun fetchCityName(tvLocation: TextView) {
-//        fetchDeviceLocation { latitude, longitude ->
-//            try {
-//                geocoder = Geocoder(appCompatActivity, Locale.getDefault())
-//                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
-//                if (addresses != null) {
-//                    val cityName = addresses[0].locality
-//                    tvLocation.text = cityName
-//                } else {
-//                    tvLocation.text = "City not found"
-//                }
-//            } catch (e: IOException) {
-//                tvLocation.text = "Error fetching city name"
-//            }
-//        }
-//    }
-    fun fetchCityName(latitude: Double, longitude: Double, onCityNameReceived: (String) -> Unit) {
+    fun fetchCityName(latitude: Double, longitude: Double): String {
         geocoder = Geocoder(appCompatActivity, Locale.getDefault())
         try {
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
-            if (addresses != null && addresses.isNotEmpty()) {
+            if (!addresses.isNullOrEmpty()) {
                 val cityName = addresses[0].locality
-                onCityNameReceived(cityName)
+                return cityName
             } else {
-                onCityNameReceived("City not found")
+                return "City not found"
             }
         } catch (e: IOException) {
-            onCityNameReceived("Error fetching city name")
+            return "Error fetching city name"
         }
     }
 

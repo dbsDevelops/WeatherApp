@@ -5,10 +5,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.dbuxton.weatherapp.data.mappers.Converters
 import com.dbuxton.weatherapp.data.model.ForecastData
+import com.dbuxton.weatherapp.data.model.HourlyData
 import com.dbuxton.weatherapp.data.model.UserData
-import com.dbuxton.weatherapp.data.model.WeatherData
 
-@Database(entities = [UserData::class, ForecastData::class, WeatherData::class], version = 2, exportSchema = false)
+@Database(entities = [UserData::class, ForecastData::class, HourlyData::class], version = 17, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class WeatherDatabase: RoomDatabase() {
     abstract fun weatherDao(): WeatherDao

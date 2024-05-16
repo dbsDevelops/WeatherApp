@@ -26,4 +26,12 @@
     <string name="_24_c">24ºC</string>
     <string name="_9">9</string>
     <string name="clear_sky">Clear Sky</string>
+    <string name="zaragoza">Zaragoza</string>
+    <string name="max_list">Max:</string>
+    <string name="weather_icon">Weather Icon</string>
+    <string-array name="filter_options">
+        <item>Current Temperature</item>
+        <item>Minimum Temperature</item>
+        <item>Maximum Temperature</item>
+    </string-array>
 </resources>

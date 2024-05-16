@@ -283,8 +283,9 @@
                 android:gravity="center"
                 android:orientation="horizontal">
                 <ImageButton
+                    android:id="@+id/ibDefaultCities"
                     android:layout_width="140dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:src="@drawable/default_cities_icon"
                     android:background="@drawable/round_corner_purple"
                     android:scaleType="fitCenter"
@@ -295,11 +296,13 @@
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"/>
                 <ImageButton
+                    android:id="@+id/ibFavouriteCities"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/favourite_cities_icon"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_favourite_city"
                     android:background="@drawable/round_corner_purple"
                     android:scaleType="fitCenter"
+                    android:padding="15dp"
                     android:tooltipText="@string/my_favourites"
                     android:contentDescription="@string/my_favourites"/>
             </LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvCityName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/zaragoza"/>
+
+    <TextView
+        android:id="@+id/tvCityTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCityName"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:text="33ºC"/>
+
+    <ImageView
+        android:id="@+id/ivCityWeatherIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="220dp"
+        android:src="@drawable/partly_cloudy_day"/>
+
+    <TextView
+        android:id="@+id/tvCityMaxTemperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:text="@string/max"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tvCityMaxTemperatureValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="230dp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tvCityMinTemperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        android:layout_below="@id/tvCityMaxTemperature"
+        android:textColor="@color/white"
+        android:text="@string/min"/>
+
+    <TextView
+        android:id="@+id/tvCityMinTemperatureValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="230dp"
+        android:layout_below="@id/tvCityMaxTemperatureValue"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/ivIsFavouriteCity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="300dp"
+        android:src="@drawable/ic_favourite_city"/>
+</RelativeLayout>
