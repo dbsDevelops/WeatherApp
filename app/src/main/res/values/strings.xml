@@ -29,6 +29,7 @@
     <string name="zaragoza">Zaragoza</string>
     <string name="max_list">Max:</string>
     <string name="weather_icon">Weather Icon</string>
+    <string name="historical_data">Historical Data</string>
     <string-array name="filter_options">
         <item>Current Temperature</item>
         <item>Minimum Temperature</item>

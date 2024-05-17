@@ -41,7 +41,8 @@ fun ForecastDto.toForecastDataList(): List<ForecastData> {
             condition = forecastData.conditions,
             description = forecastData.description,
             icon = forecastData.icon,
-            isFavourite = false
+            isFavourite = false,
+            isSaved = false
         )
         idForecast()
         return listOf(forecast)

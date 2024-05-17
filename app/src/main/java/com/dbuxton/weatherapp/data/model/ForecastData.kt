@@ -19,5 +19,6 @@ data class ForecastData(
     @ColumnInfo(name = "precipitation_probability") val precipitationProbability: Int,
     @ColumnInfo(name = "uv_index") val uvIndex: Int,
     @ColumnInfo(name = "wind_speed") val windSpeed: Double,
-    @ColumnInfo(name = "is_favourite") var isFavourite: Boolean
+    @ColumnInfo(name = "is_favourite") var isFavourite: Boolean,
+    @ColumnInfo(name = "is_saved") var isSaved: Boolean
 )

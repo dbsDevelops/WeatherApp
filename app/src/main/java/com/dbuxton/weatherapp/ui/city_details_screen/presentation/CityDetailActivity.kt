@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dbuxton.weatherapp.data.model.HourlyData
 import com.dbuxton.weatherapp.databinding.ActivityCityDetailBinding
 import com.dbuxton.weatherapp.ui.city_details_screen.adapter.HourlyAdapter
+import com.dbuxton.weatherapp.ui.historical_data_screen.presentation.HistoricalDataScreenActivity
 import com.dbuxton.weatherapp.ui.list_cities_screens.default_cities_screen.presentation.DefaultCitiesScreenActivity
 import com.dbuxton.weatherapp.ui.list_cities_screens.favourite_cities_screen.presentation.FavouriteCitiesScreenActivity
 import kotlinx.coroutines.CoroutineScope
@@ -64,16 +65,22 @@ class CityDetailActivity : AppCompatActivity() {
         }
 
         val forecastData = forecastDataDeferred.await()
-        withContext(Dispatchers.Main) {
-            view.tvLocation.text = forecastData.cityName
-            view.tvTemperature.text = forecastData.temperature.toString() + "°C"
-            view.tvDescription.text = forecastData.condition
-            view.tvCondition.text = forecastData.condition
-            view.tvMinTemperature.append(forecastData.minTemperature.toString())
-            view.tvMaxTemperature.append(forecastData.maxTemperature.toString())
-            view.tvPrecipitationProbabilityValue.text = forecastData.precipitationProbability.toString() + "%"
-            view.tvUvIndexValue.text = forecastData.uvIndex.toString()
-            view.tvWindSpeedValue.text = forecastData.windSpeed.toString() + " km/h"
+        if(forecastData != null) {
+            withContext(Dispatchers.Main) {
+                view.tvLocation.text = forecastData.cityName
+                view.tvTemperature.text = forecastData.temperature.toString() + "°C"
+                view.tvDescription.text = forecastData.condition
+                view.tvCondition.text = forecastData.condition
+                view.tvMinTemperature.append(forecastData.minTemperature.toString())
+                view.tvMaxTemperature.append(forecastData.maxTemperature.toString())
+                view.tvPrecipitationProbabilityValue.text = forecastData.precipitationProbability.toString() + "%"
+                view.tvUvIndexValue.text = forecastData.uvIndex.toString()
+                view.tvWindSpeedValue.text = forecastData.windSpeed.toString() + " km/h"
+            }
+        } else {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@CityDetailActivity, "No forecast data available", Toast.LENGTH_SHORT).show()
+            }
         }
 
         val hourlyDataList = hourlyDataListDeferred.await()
@@ -100,6 +107,11 @@ class CityDetailActivity : AppCompatActivity() {
         }
         view.ibFavouriteCities.setOnClickListener {
             val intent = Intent(this, FavouriteCitiesScreenActivity::class.java)
+            startActivity(intent)
+        }
+        view.ibHistoricalData.setOnClickListener {
+            val intent = Intent(this, HistoricalDataScreenActivity::class.java)
+            intent.putExtra("CITY_NAME", view.tvLocation.text.toString())
             startActivity(intent)
         }
     }

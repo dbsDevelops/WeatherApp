@@ -10,12 +10,13 @@
     <SearchView
         android:id="@+id/svCities"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:queryHint="Search Cities"/>
+
     <Spinner
         android:id="@+id/spFilterCities"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_below="@id/svCities"
         android:entries="@array/filter_options"
         android:background="@color/yellow"/>

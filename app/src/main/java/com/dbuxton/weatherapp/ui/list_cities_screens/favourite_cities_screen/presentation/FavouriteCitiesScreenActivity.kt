@@ -21,10 +21,3 @@ class FavouriteCitiesScreenActivity : BaseCitiesScreenActivity() {
         updateList(favouriteCities)
     }
 }
-
-//class FavouriteCitiesScreenActivity : AppCompatActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//    }
-//}

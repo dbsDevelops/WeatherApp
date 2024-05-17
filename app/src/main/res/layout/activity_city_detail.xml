@@ -257,13 +257,6 @@
                     android:textSize="24sp"
                     android:text="@string/today"
                     />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:text="@string/next_7_days_"/>
 
             </LinearLayout>
 
@@ -283,27 +276,42 @@
                 android:orientation="horizontal">
                 <ImageButton
                     android:id="@+id/ibDefaultCities"
-                    android:layout_width="140dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/default_cities_icon"
                     android:background="@drawable/round_corner_purple"
                     android:scaleType="fitCenter"
                     android:padding="15dp"
+
                     android:tooltipText="@string/my_cities"
                     android:contentDescription="@string/my_cities"/>
                 <Space
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <ImageButton
                     android:id="@+id/ibFavouriteCities"
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/ic_favourite_city"
                     android:background="@drawable/round_corner_purple"
                     android:scaleType="fitCenter"
                     android:padding="15dp"
+                    android:layout_marginStart="30dp"
                     android:tooltipText="@string/my_favourites"
                     android:contentDescription="@string/my_favourites"/>
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/ibHistoricalData"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/historical_data_icon"
+                    android:background="@drawable/round_corner_purple"
+                    android:scaleType="fitCenter"
+                    android:padding="17dp"
+                    android:tooltipText="@string/historical_data"
+                    android:contentDescription="@string/historical_data"/>
             </LinearLayout>
 
         </LinearLayout>
