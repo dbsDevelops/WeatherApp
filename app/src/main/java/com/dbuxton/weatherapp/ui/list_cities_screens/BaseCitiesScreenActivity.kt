@@ -1,6 +1,5 @@
-package com.dbuxton.weatherapp.ui.default_cities_screen.presentation
+package com.dbuxton.weatherapp.ui.list_cities_screens
 
-//import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,58 +13,55 @@ import com.dbuxton.weatherapp.R
 import com.dbuxton.weatherapp.data.local.WeatherDatabase
 import com.dbuxton.weatherapp.data.local.WeatherDatabaseImpl
 import com.dbuxton.weatherapp.data.model.ForecastData
-import com.dbuxton.weatherapp.databinding.ActivityDefaultCitiesScreenBinding
+import com.dbuxton.weatherapp.databinding.ActivityBaseCitiesScreenBinding
 import com.dbuxton.weatherapp.ui.city_details_screen.presentation.CityDetailActivity
-import com.dbuxton.weatherapp.ui.default_cities_screen.adapter.CityItemAdapter
+import com.dbuxton.weatherapp.ui.list_cities_screens.default_cities_screen.adapter.CityItemAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DefaultCitiesScreenActivity : AppCompatActivity() {
-    private val view by lazy { ActivityDefaultCitiesScreenBinding.inflate(layoutInflater) }
-    private lateinit var forecastDataAdapter: CityItemAdapter
-    private var forecastDataList: MutableList<ForecastData> = mutableListOf()
-    private val scope = CoroutineScope(Dispatchers.IO)
+abstract class BaseCitiesScreenActivity : AppCompatActivity() {
+    protected val view by lazy { ActivityBaseCitiesScreenBinding.inflate(layoutInflater) }
+    private lateinit var cityItemAdapter: CityItemAdapter
+    protected var forecastDataList: MutableList<ForecastData> = mutableListOf()
+    protected val scope = CoroutineScope(Dispatchers.IO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(view.root)
 
-        val db = WeatherDatabaseImpl(application).db
-
         initRecyclerView()
         initSearchView()
         initSpinner()
-
-        scope.launch {
-            loadDefaultCities(db)
-        }
     }
 
     private fun initRecyclerView() {
-        forecastDataAdapter = CityItemAdapter(forecastDataList, { forecastData ->
+        cityItemAdapter = CityItemAdapter(forecastDataList, { forecastData ->
             forecastData.isFavourite = !forecastData.isFavourite
-            forecastDataAdapter.notifyDataSetChanged()
+            scope.launch {
+                Log.d("BaseCitiesScreenActivity", "Updating ${forecastData.cityName} with id ${forecastData.id_forecast} favourite status in database")
+                val db = WeatherDatabaseImpl(application).db
+                db.weatherDao().updateCityFavoriteStatus(forecastData.cityName, forecastData.isFavourite)
+            }
+            runOnUiThread { cityItemAdapter.notifyDataSetChanged() }
         }, { cityWeather ->
-            // Handle city item click
-            val intent = Intent(this@DefaultCitiesScreenActivity, CityDetailActivity::class.java).apply {
+            val intent = Intent(this, CityDetailActivity::class.java).apply {
                 putExtra("CITY_NAME", cityWeather.cityName)
             }
             startActivity(intent)
         })
-        view.rvCities.layoutManager = LinearLayoutManager(this@DefaultCitiesScreenActivity)
-        view.rvCities.adapter = forecastDataAdapter
+        view.rvCities.layoutManager = LinearLayoutManager(this)
+        view.rvCities.adapter = cityItemAdapter
     }
 
     private fun initSearchView() {
-        Log.d("InitSearchView in DefaultCitiesScreenActivity", "Forecast data list: $forecastDataList")
         view.svCities.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                forecastDataAdapter.updateList(
+                cityItemAdapter.updateList(
                     if (newText.isNullOrEmpty()) forecastDataList
                     else forecastDataList.filter {
                         it.cityName.contains(newText, ignoreCase = true)
@@ -78,7 +74,7 @@ class DefaultCitiesScreenActivity : AppCompatActivity() {
 
     private fun initSpinner() {
         val adapter = ArrayAdapter.createFromResource(
-            this@DefaultCitiesScreenActivity,
+            this,
             R.array.filter_options,
             android.R.layout.simple_spinner_item
         )
@@ -88,29 +84,23 @@ class DefaultCitiesScreenActivity : AppCompatActivity() {
         view.spFilterCities.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val sortedList = when (position) {
-                    0 -> forecastDataList.sortedBy { it.temperature }
+                    0 -> forecastDataList.sortedByDescending { it.temperature }
                     1 -> forecastDataList.sortedBy { it.minTemperature }
                     2 -> forecastDataList.sortedByDescending { it.maxTemperature }
                     else -> forecastDataList
                 }
-                forecastDataAdapter.updateList(sortedList)
+                cityItemAdapter.updateList(sortedList)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
-    private suspend fun loadDefaultCities(db: WeatherDatabase) {
-        forecastDataList.add(db.weatherDao().getForecastByCity("Zaragoza"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("London"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("Tokyo"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("Berlin"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("New York"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("Sydney"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("Paris"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("Cape Town"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("Hong Kong"))
-        forecastDataList.add(db.weatherDao().getForecastByCity("Moscow"))
-        forecastDataAdapter.updateList(forecastDataList)
+    protected fun updateList(newList: List<ForecastData>) {
+        forecastDataList.clear()
+        forecastDataList.addAll(newList)
+        runOnUiThread { cityItemAdapter.updateList(forecastDataList) }
     }
+
+    abstract suspend fun loadCities(db: WeatherDatabase)
 }

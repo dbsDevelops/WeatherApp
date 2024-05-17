@@ -9,7 +9,7 @@ import com.dbuxton.weatherapp.data.model.HourlyData
 import com.dbuxton.weatherapp.data.remote.WeatherApiService
 
 class WeatherRepository(private val weatherDao: WeatherDao, private val apiService: WeatherApiService) {
-    suspend fun fetchAndSaveDailyWeatherData(location: String, apiKey: String) {
+    suspend fun fetchAndSaveDailyWeatherData(location: String) {
         val response = apiService.getForecastData(location)
         Log.d("WeatherRepository", "fetchAndSaveDailyWeatherData: $response")
         val hourlyDataList = response.toHourlyDataList()

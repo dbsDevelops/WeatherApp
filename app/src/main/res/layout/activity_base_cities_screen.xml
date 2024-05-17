@@ -5,9 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.list_cities_screens.default_cities_screen.presentation.DefaultCitiesScreenActivity">
+    tools:context=".ui.list_cities_screens.BaseCitiesScreenActivity">
 
-    <!--
     <SearchView
         android:id="@+id/svCities"
         android:layout_width="match_parent"
@@ -26,5 +25,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/spFilterCities"/>
-        -->
+
 </RelativeLayout>

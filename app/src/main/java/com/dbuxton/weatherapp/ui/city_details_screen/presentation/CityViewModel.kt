@@ -23,6 +23,7 @@ class CityViewModel (application: Application): AndroidViewModel(application) {
     val db = WeatherDatabaseImpl(application).db
 
     init {
+//        val weatherDao = WeatherDatabase.getInstance(application).weatherDao()
         val weatherDao = db.weatherDao()
         val apiService = Retrofit.Builder()
             .baseUrl("https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/")
@@ -35,9 +36,9 @@ class CityViewModel (application: Application): AndroidViewModel(application) {
         forecastData = MutableLiveData()
     }
 
-    fun fetchWeatherData(location: String, apiKey: String) {
+    fun fetchWeatherData(location: String) {
         viewModelScope.launch {
-            weatherRepository.fetchAndSaveDailyWeatherData(location, apiKey)
+            weatherRepository.fetchAndSaveDailyWeatherData(location)
 
             (hourlyDataList as MutableLiveData).postValue(weatherRepository.getHourlyDataByCity(location))
             //hourlyDataList.addAll(weatherRepository.getHourlyDataByCity(location))

@@ -3,24 +3,25 @@ package com.dbuxton.weatherapp.ui.city_details_screen.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dbuxton.weatherapp.data.model.HourlyData
 import com.dbuxton.weatherapp.databinding.ActivityCityDetailBinding
 import com.dbuxton.weatherapp.ui.city_details_screen.adapter.HourlyAdapter
-import com.dbuxton.weatherapp.ui.default_cities_screen.presentation.DefaultCitiesScreenActivity
-import com.dbuxton.weatherapp.ui.favourite_cities_screen.presentation.FavouriteCitiesScreenActivity
+import com.dbuxton.weatherapp.ui.list_cities_screens.default_cities_screen.presentation.DefaultCitiesScreenActivity
+import com.dbuxton.weatherapp.ui.list_cities_screens.favourite_cities_screen.presentation.FavouriteCitiesScreenActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CityDetailActivity : AppCompatActivity() {
     private val view by lazy { ActivityCityDetailBinding.inflate(layoutInflater) }
-    //private val apiKey = "UGGQU4XS3QHQ4VC3KSR2JSL3G"
-    private val apiKey = "A58D6UR5PXC67DAHDQNMJJVGD"
+    private val apiKey = "UGGQU4XS3QHQ4VC3KSR2JSL3G"
+    //private val apiKey = "A58D6UR5PXC67DAHDQNMJJVGD"
     private val scope = CoroutineScope(Dispatchers.IO)
-    private val cityNames = mutableListOf("Zaragoza", "London", "Paris", "Berlin", "New York", "Tokyo", "Sydney", "Cape Town", "Hong Kong", "Moscow")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +31,19 @@ class CityDetailActivity : AppCompatActivity() {
 
         // Get the city name from the intent
         val cityName = intent.getStringExtra("CITY_NAME")
-        cityNames.add(cityName!!)
+        val fromSplashScreen = intent.getBooleanExtra("FROM_SPLASH_SCREEN", false)
         Log.d("CityDetailActivity", "City name: $cityName")
+
         if (cityName != null) {
+            if (fromSplashScreen) {
+                // Fetch and save weather data for the given city name
+                cityDetailViewModel.fetchWeatherData(cityName)
+            }
             // Fetch weather data for the given city name
             getCityWeatherData(cityName, cityDetailViewModel)
+        } else {
+            Toast.makeText(this@CityDetailActivity, "City name could not be retrieved", Toast.LENGTH_SHORT).show()
         }
-        // Fetch and save weather data for default cities
-        fetchAndSaveDefaultCitiesWeatherData()
 
         // Initialise the buttons
         initButtons()
@@ -45,15 +51,19 @@ class CityDetailActivity : AppCompatActivity() {
 
     private fun getCityWeatherData(cityName:String, cityDetailViewModel: CityViewModel) {
         scope.launch {
-            cityDetailViewModel.fetchWeatherData(cityName, apiKey)
             updateUI(cityName, cityDetailViewModel)
         }
     }
 
     private suspend fun updateUI(cityName: String, cityDetailViewModel: CityViewModel) {
-        val forecastData = withContext(Dispatchers.IO) {
+        val forecastDataDeferred = scope.async(Dispatchers.IO) {
             cityDetailViewModel.db.weatherDao().getForecastByCity(cityName)
         }
+        val hourlyDataListDeferred = scope.async(Dispatchers.IO) {
+            cityDetailViewModel.db.weatherDao().getHourlyDataByCity(cityName)
+        }
+
+        val forecastData = forecastDataDeferred.await()
         withContext(Dispatchers.Main) {
             view.tvLocation.text = forecastData.cityName
             view.tvTemperature.text = forecastData.temperature.toString() + "°C"
@@ -66,9 +76,7 @@ class CityDetailActivity : AppCompatActivity() {
             view.tvWindSpeedValue.text = forecastData.windSpeed.toString() + " km/h"
         }
 
-        val hourlyDataList = withContext(Dispatchers.IO) {
-            cityDetailViewModel.db.weatherDao().getHourlyDataByCity(cityName)
-        }
+        val hourlyDataList = hourlyDataListDeferred.await()
         withContext(Dispatchers.Main) {
             initRecyclerView(hourlyDataList)
         }
@@ -83,15 +91,6 @@ class CityDetailActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(
             this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = HourlyAdapter(hourlyList)
-    }
-
-    private fun fetchAndSaveDefaultCitiesWeatherData() {
-        scope.launch {
-            for (city in cityNames) {
-                val cityDetailViewModel = CityViewModel(application)
-                cityDetailViewModel.fetchWeatherData(city, apiKey)
-            }
-        }
     }
 
     private fun initButtons() {

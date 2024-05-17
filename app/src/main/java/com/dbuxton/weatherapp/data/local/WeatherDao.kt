@@ -24,4 +24,10 @@ interface WeatherDao {
 
     @Query("SELECT * FROM forecast_data WHERE city_name = :cityName")
     suspend fun getForecastByCity(cityName: String): ForecastData
+
+    @Query("SELECT * FROM forecast_data WHERE is_favourite = 1")
+    fun getFavouriteCities(): List<ForecastData>
+
+    @Query("UPDATE forecast_data SET is_favourite = :isFavourite WHERE city_name = :cityName")
+    suspend fun updateCityFavoriteStatus(cityName: String, isFavourite: Boolean)
 }

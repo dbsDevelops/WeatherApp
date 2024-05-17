@@ -18,10 +18,16 @@
         android:theme="@style/Theme.WeatherApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.favourite_cities_screen.presentation.FavouriteCitiesScreenActivity"
+            android:name=".ui.historical_data_screen.presentation.HistoricalDataScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.default_cities_screen.presentation.DefaultCitiesScreenActivity"
+            android:name=".ui.list_cities_screens.BaseCitiesScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.list_cities_screens.favourite_cities_screen.presentation.FavouriteCitiesScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.list_cities_screens.default_cities_screen.presentation.DefaultCitiesScreenActivity"
             android:exported="false" />
         <activity
             android:name=".ui.city_details_screen.presentation.CityDetailActivity"

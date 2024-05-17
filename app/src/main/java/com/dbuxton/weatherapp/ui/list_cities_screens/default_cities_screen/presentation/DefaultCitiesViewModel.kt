@@ -1,4 +1,4 @@
-package com.dbuxton.weatherapp.ui.default_cities_screen.presentation
+package com.dbuxton.weatherapp.ui.list_cities_screens.default_cities_screen.presentation
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

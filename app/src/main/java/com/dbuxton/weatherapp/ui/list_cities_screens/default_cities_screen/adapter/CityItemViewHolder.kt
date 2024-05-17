@@ -1,4 +1,4 @@
-package com.dbuxton.weatherapp.ui.default_cities_screen.adapter
+package com.dbuxton.weatherapp.ui.list_cities_screens.default_cities_screen.adapter
 
 import android.view.View
 import android.widget.ImageView

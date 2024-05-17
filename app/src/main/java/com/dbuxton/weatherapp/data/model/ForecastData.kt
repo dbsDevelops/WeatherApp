@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 @Entity(tableName = "forecast_data")
 data class ForecastData(
-    @PrimaryKey(autoGenerate = true) val id_forecast: Int = 0,
+    @PrimaryKey val id_forecast: Int = 0,
     @ColumnInfo(name = "city_name") val cityName: String,
     @ColumnInfo(name = "date") val date: LocalDate,
     @ColumnInfo(name = "temperature") val temperature: Int,

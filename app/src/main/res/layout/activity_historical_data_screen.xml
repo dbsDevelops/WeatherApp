@@ -5,6 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.list_cities_screens.favourite_cities_screen.presentation.FavouriteCitiesScreenActivity">
+    tools:context=".ui.historical_data_screen.presentation.HistoricalDataScreenActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.dbuxton.weatherapp.ui.splash_screen.location
 
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -32,8 +33,13 @@ class LocationManager(
             return
         }
         val task = fusedLocationProviderClient.lastLocation
-        task.addOnSuccessListener {
-            onLocationReceived(it.latitude, it.longitude)
+        task.addOnSuccessListener {location ->
+            if (location != null) {
+                onLocationReceived(location.latitude, location.longitude)
+            } else {
+                // Inform the user that the location could not be retrieved
+                Toast.makeText(appCompatActivity, "Location could not be retrieved", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -66,9 +72,5 @@ class LocationManager(
 
     public fun setLongitude(longitude: Double) {
         this.longitude = longitude
-    }
-
-    public fun fetchData() {
-
     }
 }
